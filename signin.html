@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Vietty | sign in</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="signin.js" defer></script>
+        <meta charset=”utf-8”>
+        <link rel="icon" href="images/Vietty_icon.png" type="image/x-icon">
+        
+
+        <!--FONTS-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="signInPage">
+            <h1>Sign In </h1>
+            <label>Username:</label>
+            <input type="text" id="usernameInput" placeholder="Enter your username">
+            <br>
+            <label>Password:</label>
+            <input type="password" id="passwordInput" placeholder="Enter your password">
+            <br>
+            <label>Comfirm Password:</label>
+            <input type="password" id="passwordComfirmationInput" placeholder="Enter your password to comfirm">
+            <br>
+            <label>Year Level:</label>
+            <select id="yearInput">
+                <option value="" disabled selected hidden>Select an option...</option>
+                <option value="year9">Year 9</option>
+                <option value="year10">Year 10</option>
+                <option value="year11">Year 11</option>
+                <option value="year12">Year 12</option>
+                <option value="year13">Year 13</option>
+            </select>    
+            <br>
+            <button id="signin-button">Sign In</button>
+            <div id="signinRequirements">
+                <p id="usernameRequirement"></p>
+                <p id="usernameRequirementSymbolsAndNumbers"></p>
+                <p id="usernameRequirementLength"></p>
+                <p id="passwordRequirement"></p>
+                <p id="passwordRequirementLength"></p>
+                <p id="passwordRequirementCheck"></p>
+                <p id="yearRequirement"></p>
+            </div>
+        </div>
+    </body>
+</html>

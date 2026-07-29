@@ -1,0 +1,76 @@
+document.getElementById("signin-button").addEventListener("click", checkValidity)
+
+function checkValidity() {
+    let usernameCheck = document.getElementById("usernameInput").value;
+    let passwordCheck = document.getElementById("passwordInput").value;
+    let passwordComfirmationCheck = document.getElementById("passwordComfirmationInput").value;
+    let yearCheck = document.getElementById("yearInput").value;
+
+    document.getElementById("usernameRequirement").textContent =  "";
+    document.getElementById("usernameRequirementSymbolsAndNumbers").textContent =  "";
+    document.getElementById("usernameRequirementLength").textContent =  "";
+    document.getElementById("passwordRequirement").textContent =  "";
+    document.getElementById("passwordRequirementLength").textContent =  "";
+    document.getElementById("passwordRequirementCheck").textContent =  "";
+    document.getElementById("yearRequirement").textContent =  "";
+
+
+    // check name validity
+    if (!usernameCheck) {
+        document.getElementById("usernameRequirement").textContent =  "Please enter a username";
+        usernameInput.style.borderColor = "red";
+
+    } else if (/[^a-zA-Z ]/.test(usernameCheck)) {
+        document.getElementById("usernameRequirementSymbolsAndNumbers").textContent =  "Username must not contain any symbols or numbers";
+        usernameInput.style.borderColor = "red";
+
+    } else if (usernameCheck.length < 3 )  {
+        document.getElementById("usernameRequirementLength").textContent =  "Username must be at least 3 characters";
+        usernameInput.style.borderColor = "red";
+        
+    } else {
+        usernameValidity = true;
+        usernameInput.style.borderColor = "#e3d8ca";
+    }
+
+    // check password validity
+    if (!passwordCheck) {
+        document.getElementById("passwordRequirement").textContent =  "Please enter a password";
+        passwordInput.style.borderColor = "red";
+    
+    } else if (passwordCheck.length < 8 ) {
+        document.getElementById("passwordRequirementLength").textContent =  "Password must be at least 8 characters";
+        passwordInput.style.borderColor = "red";
+    
+    } else {
+        passwordValidity = true;
+        passwordInput.style.borderColor = "#e3d8ca";
+    }
+
+    // check password comfirmation validity
+    if (passwordComfirmationCheck !== passwordCheck) {
+      document.getElementById("passwordRequirementCheck").textContent =  "Passwords do not match";
+        passwordComfirmationInput.style.borderColor = "red";
+
+    } else {
+        passwordComfirmationValidity = true;
+        passwordInput.style.borderColor = "#e3d8ca";
+    }
+
+    // check year validity
+    if (yearCheck === "") {
+      document.getElementById("yearRequirement").textContent =  "Please select a year level";
+        yearInput.style.borderColor = "red";
+
+    } else {
+        yearValidity = true;
+        yearInput.style.borderColor = "#e3d8ca";
+    }
+
+
+
+    // run add person func if everything is valid
+    if (usernameValidity && passwordValidity && passwordComfirmationValidity && yearValidity) {
+        createUser();
+    }
+}
