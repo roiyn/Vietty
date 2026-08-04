@@ -15,6 +15,11 @@ function checkValidity() {
     document.getElementById("yearRequirement").textContent =  "";
 
 
+    let usernameInput = document.getElementById("usernameInput");
+    let passwordInput = document.getElementById("passwordInput");
+    let passwordComfirmationInput = document.getElementById("passwordComfirmationInput");
+    let yearInput = document.getElementById("yearInput");
+
     // check name validity
     if (!usernameCheck) {
         document.getElementById("usernameRequirement").textContent =  "Please enter a username";
@@ -54,7 +59,7 @@ function checkValidity() {
 
     } else {
         passwordComfirmationValidity = true;
-        passwordInput.style.borderColor = "#e3d8ca";
+        passwordComfirmationInput.style.borderColor = "#e3d8ca";
     }
 
     // check year validity
