@@ -13,19 +13,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div class="signInPage">
+        <form class="signInPage" action="signin-form.php" method="post">
             <h1>Sign In </h1>
             <label>Username:</label>
-            <input type="text" id="usernameInput" placeholder="Enter your username">
+            <input type="text" id="usernameInput" name="username" placeholder="Enter your username" maxlength="20">
             <br>
             <label>Password:</label>
-            <input type="password" id="passwordInput" placeholder="Enter your password">
+            <input type="password" id="passwordInput" name="password" placeholder="Enter your password" maxlength="20">
             <br>
-            <label>Comfirm Password:</label>
-            <input type="password" id="passwordComfirmationInput" placeholder="Enter your password to comfirm">
+            <label>Confirm Password:</label>
+            <input type="password" id="passwordComfirmationInput" name="passwordConfirmation" placeholder="Enter your password to comfirm" maxlength="20">
             <br>
             <label>Year Level:</label>
-            <select id="yearInput">
+            <select id="yearInput" name="year">
                 <option value="" disabled selected hidden>Select an option...</option>
                 <option value="year9">Year 9</option>
                 <option value="year10">Year 10</option>
@@ -34,16 +34,17 @@
                 <option value="year13">Year 13</option>
             </select>    
             <br>
-            <button id="signin-button">Sign In</button>
+            <button id="signin-button" type="submit">Sign In</button>
             <div id="signinRequirements">
                 <p id="usernameRequirement"></p>
                 <p id="usernameRequirementSymbolsAndNumbers"></p>
                 <p id="usernameRequirementLength"></p>
+                <p id="usernameRequirementExisting"></p>
                 <p id="passwordRequirement"></p>
                 <p id="passwordRequirementLength"></p>
                 <p id="passwordRequirementCheck"></p>
                 <p id="yearRequirement"></p>
             </div>
-        </div>
+        </form>
     </body>
 </html>

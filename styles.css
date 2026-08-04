@@ -250,7 +250,7 @@ select {
   border-color: #e3d8ca;
 }
 
-.signInPage {          
+.signInPage,.logInPage {          
     display: flex;
     flex-direction: column; 
     align-items: center;

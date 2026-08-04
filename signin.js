@@ -1,11 +1,13 @@
 document.getElementById("signin-button").addEventListener("click", checkValidity)
 
 function checkValidity() {
+    // establish variables to inputs by the user
     let usernameCheck = document.getElementById("usernameInput").value;
     let passwordCheck = document.getElementById("passwordInput").value;
     let passwordComfirmationCheck = document.getElementById("passwordComfirmationInput").value;
     let yearCheck = document.getElementById("yearInput").value;
 
+    // get the requirement messages, make all of them show nothing
     document.getElementById("usernameRequirement").textContent =  "";
     document.getElementById("usernameRequirementSymbolsAndNumbers").textContent =  "";
     document.getElementById("usernameRequirementLength").textContent =  "";
@@ -14,11 +16,12 @@ function checkValidity() {
     document.getElementById("passwordRequirementCheck").textContent =  "";
     document.getElementById("yearRequirement").textContent =  "";
 
+    // establish validitiy variables to be initally false
+    let usernameValidity = false;
+    let passwordValidity = false;
+    let passwordComfirmationValidity = false;
+    let yearValidity = false;
 
-    let usernameInput = document.getElementById("usernameInput");
-    let passwordInput = document.getElementById("passwordInput");
-    let passwordComfirmationInput = document.getElementById("passwordComfirmationInput");
-    let yearInput = document.getElementById("yearInput");
 
     // check name validity
     if (!usernameCheck) {
@@ -32,7 +35,7 @@ function checkValidity() {
     } else if (usernameCheck.length < 3 )  {
         document.getElementById("usernameRequirementLength").textContent =  "Username must be at least 3 characters";
         usernameInput.style.borderColor = "red";
-        
+
     } else {
         usernameValidity = true;
         usernameInput.style.borderColor = "#e3d8ca";
@@ -74,8 +77,15 @@ function checkValidity() {
 
 
 
-    // run add person func if everything is valid
-    if (usernameValidity && passwordValidity && passwordComfirmationValidity && yearValidity) {
-        createUser();
-    }
+    // if all inputs are valid 
+    if (!usernameValidity ||
+    !passwordValidity ||
+    !passwordComfirmationValidity ||
+    !yearValidity) {
+
+        // prevent the form from submitting to php
+    event.preventDefault();
+
+    return;
+}
 }
