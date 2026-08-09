@@ -7,52 +7,29 @@
         <meta charset=”utf-8”>
         <link rel="icon" href="images/Vietty_icon.png" type="image/x-icon">
         
-
         <!--FONTS-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
 
-
-        <!---SEARCH BAR-->
+        <!---header-->
         <div class="header">
-            <div class="search-bar">
-                <img src="images/search_icon.png" alt="search icon" width="30px"> 
-                <input class="search-input"type="search" placeholder="Search"> 
-            </div>
-            
             <div class="header-buttons">
-                <a href="signin.html"><button id="signin-page-button">Sign In</button></a>
+                <a href="signup.html"><button id="signin-page-button">Sign Up</button></a>
                 <a href="login.html"><button id="login-page-button">Log In</button></a>
             </div>
         </div>
-
-
     
-
         <div class = "side-nav">
             <div class="profile-card">
                 <p></p>
             </div>
             <div class = "sidenav-items">
+                
                 <a href ="index.html">
                 <a class = "sidenav-item-current" link ="index.html">
                     <img src="images/home_icon.png" alt="home icon" width="20px">
                     <p id="home-tab">Home</p>
-                </a>
-                </a>
-
-                <a href ="popular.html">
-                <a class = "sidenav-item">
-                    <img src="images/popular_icon.png" alt="popular icon" width="20px">
-                    <p id="popular-tab">Popular</p>
-                </a>
-                </a>
-
-                <a href ="browse.html" >
-                <a class = "sidenav-item">
-                    <img src="images/browse_icon.png" alt="browse icon" width="20px">
-                    <p id="browse-tab">Browse</p>
                 </a>
                 </a>
 
@@ -68,9 +45,21 @@
 
     <body>
         <div class = "feed">
+
+            <form class="create-post-form" action="createpost-form.php" method="post">
+                <div class="create-post-user-info">
+                    <img src="images/default_profile.png" width ="40px" height="40px">
+                    <h3>Username</h3>
+                </div>
+                <input type="text" id="createPostHeaderInput" name="createPostHeader" placeholder="Title" >
+                <textarea rows="6" cols="50" type="text" id="createPostParagraphInput" name="createPostParagraph" placeholder="Body text"></textarea>
+
+                <button id="createPostButton" class="create-post-button">+ Create Post</button>
+            </form>
+
             <div class="text-post-card">
                 <div class = "user-info">  
-                    <img src="images/default_profile.png" width ="40px">
+                    <img src="images/default_profile.png" width ="40px" height="40px">
                     <div class = "names">
                         <h3>placeholder</h3>
                         <h3>reposted hours ago placeholder</h3>
@@ -86,67 +75,8 @@
                 </div>
             </div>         
         </div>
-
-        <div class = "aside">
-            <div class = "aside-item">
-                <h1>Your Classes</h1>
-                <div class = "aside-item-container"> 
-                    <a href ="Subject1.html">
-                    <button class = "aside-subject-item">
-                        <p id="subject1">Subject 1</p>
-                    </button>
-                    </a>
-
-                    <a href ="Subject2.html">
-                    <button class = "aside-subject-item">
-                        <p id="subject2">Subject 2</p>
-                    </button>
-                    </a>
-
-                    <a href ="Subject3.html" >
-                    <button class = "aside-subject-item">
-                        <p id="subject3">Subject 3</p>
-                    </button>
-                    </a>
-
-                    <a href ="Subject4.html" >
-                    <button class = "aside-subject-item">
-                        <p id="subject4">Subject 4</p>
-                    </button>
-                    </a>
-                </div>
-            </div>
-
-            <div class = "aside-item">
-                <h1>Trending Topics</h1>
-                <a href ="Subject1.html">
-                    <button class = "aside-subject-item">
-                        <p id="subject1">Subject 1</p>
-                    </button>
-                    <p id="subject1-topic">placeholder topic</p>
-                </a>
-
-                <a href ="Subject2.html">
-                    <button class = "aside-subject-item">
-                        <p id="subject2">Subject 2</p>
-                    </button>
-                    <p id="subject2-topic">placeholder topic</p>
-                </a>
-
-                <a href ="Subject3.html" >
-                    <button class = "aside-subject-item">
-                        <p id="subject3">Subject 3</p>
-                    </button>
-                    <p id="subject3-topic">placeholder topic</p>
-                </a>
-
-            </div>
-        </div>
-
-
     </body>
 
     <footer>
-
     </footer>
 </html>    
