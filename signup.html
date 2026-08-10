@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Vietty | sign in</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="signup.js" defer></script>
+        <meta charset=”utf-8”>
+        <link rel="icon" href="images/Vietty_icon.png" type="image/x-icon">
+        
+
+        <!--FONTS-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <form class="signUpPage" action="signup-form.php" method="post">
+            <h1>Sign Up </h1>
+            <label>Username:</label>
+            <input type="text" id="usernameInput" name="username" placeholder="Enter your username" maxlength="20">
+            <br>
+            <label>Password:</label>
+            <input type="password" id="passwordInput" name="password" placeholder="Enter your password" maxlength="20">
+            <br>
+            <label>Confirm Password:</label>
+            <input type="password" id="passwordComfirmationInput" name="passwordConfirmation" placeholder="Enter your password to comfirm" maxlength="20">
+            <br>
+            <label>Year Level:</label>
+            <select id="yearInput" name="year">
+                <option value="" disabled selected hidden>Select an option...</option>
+                <option value="year9">Year 9</option>
+                <option value="year10">Year 10</option>
+                <option value="year11">Year 11</option>
+                <option value="year12">Year 12</option>
+                <option value="year13">Year 13</option>
+            </select>    
+            <br>
+            <button id="signup-button" type="submit">Sign Up</button>
+            <div class="signupRequirements">
+                <p id="usernameRequirement"></p>
+                <p id="usernameRequirementSymbolsAndNumbers"></p>
+                <p id="usernameRequirementLength"></p>
+                <p id="usernameRequirementExisting"></p>
+                <p id="passwordRequirement"></p>
+                <p id="passwordRequirementLength"></p>
+                <p id="passwordRequirementCheck"></p>
+                <p id="yearRequirement"></p>
+            </div>
+        </form>
+    </body>
+</html>
