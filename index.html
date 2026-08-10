@@ -13,7 +13,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
 
         <!---header-->
-        <div class="header">
+        <div class="header">        
             <div class="header-buttons">
                 <a href="signup.html"><button id="signin-page-button">Sign Up</button></a>
                 <a href="login.html"><button id="login-page-button">Log In</button></a>
@@ -45,7 +45,6 @@
 
     <body>
         <div class = "feed">
-
             <form class="create-post-form" action="createpost-form.php" method="post">
                 <div class="create-post-user-info">
                     <img src="images/default_profile.png" width ="40px" height="40px">
@@ -53,25 +52,19 @@
                 </div>
                 <input type="text" id="createPostHeaderInput" name="createPostHeader" placeholder="Title" >
                 <textarea rows="6" cols="50" type="text" id="createPostParagraphInput" name="createPostParagraph" placeholder="Body text"></textarea>
-
                 <button id="createPostButton" class="create-post-button">+ Create Post</button>
             </form>
 
             <div class="text-post-card">
                 <div class = "user-info">  
                     <img src="images/default_profile.png" width ="40px" height="40px">
-                    <div class = "names">
-                        <h3>placeholder</h3>
-                        <h3>reposted hours ago placeholder</h3>
-                        <p>@placeholder</p>
-                    </div>
+                    <h3>Username</h3>
                 </div>
-                <br>
                 <div class = "text-post-card-heading">
-                    <h2>placeholder</h2>
+                    <h2>title</h2>
                 </div>
                 <div class = "text-post-card-content">
-                    <p>placeholder</p>
+                    <p>body text</p>
                 </div>
             </div>         
         </div>
