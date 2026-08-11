@@ -46,16 +46,16 @@ async function checkValidity(event) {
     } else {
         usernameValid = await isUsernameOriginal(usernameCheck);
         if (usernameValid === false) {
-            document.getElementById("usernameRequirement").textContent = "username taken (this is my doing - riley)";
+            document.getElementById("usernameRequirement").textContent = "Username already exists";
             usernameInput.style.borderColor = "red";
             return;
         }
         if (usernameValid === null) {
-            document.getElementById("usernameRequirement").textContent = "Unable to validate username. this is probably not your fault, please try again. (also my doing - riley)";
+            document.getElementById("usernameRequirement").textContent = "Unable to validate username, please try again.";
             usernameInput.style.borderColor = "red";
             return;
         } else {
-            document.getElementById("usernameRequirement").textContent = "Great! Username is available:D";
+            document.getElementById("usernameRequirement").textContent = "";
             usernameValid = true;
             usernameValidity = true;
             usernameInput.style.borderColor = "#e3d8ca";
