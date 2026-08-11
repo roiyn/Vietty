@@ -1,42 +1,36 @@
-
 <?php
-// tutorial credits: Dave Hollingworth on YouTube 
 
-$formUsername = $_POST['username'];
-$formPassword = $_POST['password'];
-$year = $_POST['year'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $year = $_POST['year'];
 
-$host = "127.0.0.1";
-$dbname = "vietty_db";
-$dbUsername = "root";
-$dbPassword = "";
+    if ($username === '' || $password === '' || $year === '') {
+    header('Location: signup.html');
+    die();
+    }
 
-$conn = mysqli_connect($host, $dbUsername, $dbPassword, $dbname);
+    try {
+        require_once 'dbh.php';
 
+        $query = "INSERT INTO users (username, password, year)
+                VALUES (?, ?, ?)";
 
-if (!$conn) {
-    die("Connection error: " . mysqli_connect_error());
+        $stmt = $pdo->prepare($query);
+
+        $stmt->execute([$username, $password, $year]);
+
+        $pdo = null;
+        $stmt = null;
+
+        header('Location: index.html');
+        die();
+
+} catch (PDOException $e) {
+
+     die("something went wrong. here's what:" . $e );
 }
 
-
-$sql = "INSERT INTO users (username, password, year) 
-        VALUES (? , ? , ?)";
-
-// to create a prepared statement object
-$stmt = mysqli_stmt_init($conn); 
-
-if ( ! mysqli_stmt_prepare($stmt, $sql)) {
-    die(mysqli_error($conn));
+}else { 
+    header('Location: signup.html');
 }
-
-// blind 
-mysqli_stmt_bind_param($stmt, "sss", $formUsername, $formPassword, $year);
-
-mysqli_stmt_execute($stmt);
-
-echo "User created successfully!";
-
-
-
-
-?>

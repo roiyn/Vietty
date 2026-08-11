@@ -28,3 +28,20 @@ function checkForUser() {
         passwordInput.style.borderColor = "#e3d8ca";
     }
 }
+
+let params = new URLSearchParams(window.location.search);
+let error = params.get("error");
+
+if (error === "usernotfound") {
+    document.getElementById("usernameRequirementValidity").textContent =
+        "Username doesn't exist";
+
+    document.getElementById("usernameInput").style.borderColor = "red";
+}
+
+if (error === "wrongpassword") {
+    document.getElementById("passwordRequirementValidity").textContent =
+        "Incorrect password";
+
+    document.getElementById("passwordInput").style.borderColor = "red";
+}

@@ -1,17 +1,24 @@
-document.getElementById("signup-button").addEventListener("click", checkValidity)
+async function checkValidity(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
 
-function checkValidity(event) {
-    // establish variables to inputs by the user
-    let usernameCheck = document.getElementById("usernameInput").value;
-    let passwordCheck = document.getElementById("passwordInput").value;
-    let passwordComfirmationCheck = document.getElementById("passwordComfirmationInput").value;
-    let yearCheck = document.getElementById("yearInput").value;
+    // establish references to inputs
+    const usernameInput = document.getElementById("usernameInput");
+    const passwordInput = document.getElementById("passwordInput");
+    const passwordComfirmationInput = document.getElementById("passwordComfirmationInput");
+    const yearInput = document.getElementById("yearInput");
+
+
+    const usernameCheck = usernameInput.value;
+    const passwordCheck = passwordInput.value;
+    const passwordComfirmationCheck = passwordComfirmationInput.value;
+    const yearCheck = yearInput.value;
 
     // get the requirement messages, make all of them show nothing
     document.getElementById("usernameRequirement").textContent =  "";
     document.getElementById("usernameRequirementSymbolsAndNumbers").textContent =  "";
     document.getElementById("usernameRequirementLength").textContent =  "";
-    document.getElementById("usernameRequirementValidity").textContent = "";
+    document.getElementById("usernameRequirementExisting").textContent = "";
     document.getElementById("passwordRequirement").textContent =  "";
     document.getElementById("passwordRequirementLength").textContent =  "";
     document.getElementById("passwordRequirementCheck").textContent =  "";
@@ -22,7 +29,7 @@ function checkValidity(event) {
     let passwordValidity = false;
     let passwordComfirmationValidity = false;
     let yearValidity = false;
-
+    let usernameValid = false;
 
     // check name validity
     if (!usernameCheck) {
@@ -36,10 +43,23 @@ function checkValidity(event) {
     } else if (usernameCheck.length < 3 )  {
         document.getElementById("usernameRequirementLength").textContent =  "Username must be at least 3 characters";
         usernameInput.style.borderColor = "red";
-
     } else {
-        usernameValidity = true;
-        usernameInput.style.borderColor = "#e3d8ca";
+        usernameValid = await isUsernameOriginal(usernameCheck);
+        if (usernameValid === false) {
+            document.getElementById("usernameRequirement").textContent = "username taken (this is my doing - riley)";
+            usernameInput.style.borderColor = "red";
+            return;
+        }
+        if (usernameValid === null) {
+            document.getElementById("usernameRequirement").textContent = "Unable to validate username. this is probably not your fault, please try again. (also my doing - riley)";
+            usernameInput.style.borderColor = "red";
+            return;
+        } else {
+            document.getElementById("usernameRequirement").textContent = "Great! Username is available:D";
+            usernameValid = true;
+            usernameValidity = true;
+            usernameInput.style.borderColor = "#e3d8ca";
+        }
     }
 
     // check password validity
@@ -58,7 +78,7 @@ function checkValidity(event) {
 
     // check password comfirmation validity
     if (passwordComfirmationCheck !== passwordCheck) {
-    document.getElementById("passwordRequirementCheck").textContent =  "Passwords do not match";
+        document.getElementById("passwordRequirementCheck").textContent =  "Passwords do not match";
         passwordComfirmationInput.style.borderColor = "red";
 
     } else {
@@ -68,7 +88,7 @@ function checkValidity(event) {
 
     // check year validity
     if (yearCheck === "") {
-    document.getElementById("yearRequirement").textContent =  "Please select a year level";
+        document.getElementById("yearRequirement").textContent =  "Please select a year level";
         yearInput.style.borderColor = "red";
 
     } else {
@@ -76,39 +96,54 @@ function checkValidity(event) {
         yearInput.style.borderColor = "#e3d8ca";
     }
 
-
     // if all inputs are valid 
     if (!usernameValidity ||
-    !passwordValidity ||
-    !passwordComfirmationValidity ||
-    !yearValidity) {
-    // prevent the form from submitting to php
+        !passwordValidity ||
+        !passwordComfirmationValidity ||
+        !yearValidity ||
+        !usernameValid) {
+        // prevent the form from submitting to php
         event.preventDefault();
         return;
     }
 
-    event.preventDefault();
+    document.getElementById("usernameRequirement").textContent = "";
+    document.getElementById("passwordRequirement").textContent = "";
+    document.getElementById("passwordRequirementLength").textContent = "";
+    document.getElementById("passwordRequirementCheck").textContent = "";
+    document.getElementById("yearRequirement").textContent = "";
+    console.log('checkValidity: submitting form');
+    form.submit();
+}
 
-    // checks if the username exists in the database. 
-    fetch ("checkexistingusers.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "username=" + encodeURIComponent(usernameCheck)
-    })
-    .then(function(response) {
-        return response.json(); 
-    })
-    .then(function(data) {
+async function isUsernameOriginal(username) {
+    try {
+        const response = await fetch(`check_username.php?username=${encodeURIComponent(username)}`);
+        const text = await response.text();
 
-        if (data.existing) {
-
-            document.getElementById("usernameRequirementValidity").textContent = "This username already exists";
-            usernameInput.style.borderColor = "red";
-
-            return;
+        if (!response.ok) {
+            console.error('Username validation request failed', response.status, text);
+            return null;
         }
 
-        document.querySelector("form").submit();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            console.error('Username validation response invalid JSON', parseError, text);
+            return null;
+        }
 
-    });
+        if (!data || typeof data.usernameTaken !== 'boolean') {
+            console.error('Username validation response invalid', data);
+            return null;
+        }
+
+        return data.usernameTaken !== true;
+    } catch (error) {
+        console.error('Username validation request error', error);
+        return null;
+    }
 }
+
+document.querySelector('form').addEventListener('submit', checkValidity);

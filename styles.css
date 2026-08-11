@@ -148,10 +148,16 @@
   border-color: #e3d8ca;
   }
 
+.user-info {
+  display: flex;
+  margin-bottom:5px;
+}
+
 .user-info img {
   border-radius: 50%;
   margin-right: 10px;
 }
+
 
 /*ALL GENERAL SITE CODE BELOW ------------------ */
 
