@@ -1,19 +1,21 @@
 <html>
     <head>
-        <title>Vietty | sign in</title>
+        
+        <title>Vietty | log in</title>
         <link rel="stylesheet" href="styles.css">
         <script src="login.js" defer></script>
         <meta charset=”utf-8”>
         <link rel="icon" href="images/Vietty_icon.png" type="image/x-icon">
         
-
-        <!--FONTS-->
+        <!--FONTS------------------------------------------------------------>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Rubik+Dirt&display=swap" rel="stylesheet">
     </head>
+    
     <body>
-        <div class="logInPage">
+        <!---form -------------------------------------------------------------->
+        <form class="logInPage" id="login-form" action="login-form.php" method="POST">
             <h1>Log In </h1>
             <label>Username:</label>
             <input type="text" id="usernameInput" name="username" placeholder="Enter your username" maxlength="20">
@@ -22,13 +24,13 @@
             <input type="password" id="passwordInput" name="password" placeholder="Enter your password" maxlength="20">
             <br>
             <button id="login-button">Log In</button>
-
+            
+        <!---requirement messages------------------------------------------------>
             <div id="loginRequirements">
                 <p id="usernameRequirement"></p>
-                <p id="usernameRequirementValidity"></p>
+                <p id="usernameRequirementExisting"></p>
                 <p id="passwordRequirement"></p>
-                <p id="passwordRequirementValidity"></p>
             </div>
-        </div>
+        </form>
     </body>
 </html>

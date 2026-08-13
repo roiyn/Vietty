@@ -2,17 +2,17 @@ async function checkValidity(event) {
     event.preventDefault();
     const form = event.currentTarget;
 
-    // establish references to inputs
-    const usernameInput = document.getElementById("usernameInput");
-    const passwordInput = document.getElementById("passwordInput");
-    const passwordComfirmationInput = document.getElementById("passwordComfirmationInput");
-    const yearInput = document.getElementById("yearInput");
+    // establish variables for input boxes
+    let usernameInput = document.getElementById("usernameInput");
+    let passwordInput = document.getElementById("passwordInput");
+    let passwordComfirmationInput = document.getElementById("passwordComfirmationInput");
+    let yearInput = document.getElementById("yearInput");
 
-
-    const usernameCheck = usernameInput.value;
-    const passwordCheck = passwordInput.value;
-    const passwordComfirmationCheck = passwordComfirmationInput.value;
-    const yearCheck = yearInput.value;
+    // establish variables to hold the inputs
+    let usernameCheck = usernameInput.value;
+    let passwordCheck = passwordInput.value;
+    let passwordComfirmationCheck = passwordComfirmationInput.value;
+    let yearCheck = yearInput.value;
 
     // get the requirement messages, make all of them show nothing
     document.getElementById("usernameRequirement").textContent =  "";
@@ -32,30 +32,34 @@ async function checkValidity(event) {
     let usernameValid = false;
 
     // check name validity
-    if (!usernameCheck) {
+    if (!usernameCheck) { // if the username input is empty
         document.getElementById("usernameRequirement").textContent =  "Please enter a username";
         usernameInput.style.borderColor = "red";
 
-    } else if (/[^a-zA-Z ]/.test(usernameCheck)) {
+    } else if (/[^a-zA-Z ]/.test(usernameCheck)) { // if the username input contains any symbols or numbers
         document.getElementById("usernameRequirementSymbolsAndNumbers").textContent =  "Username must not contain any symbols or numbers";
         usernameInput.style.borderColor = "red";
 
-    } else if (usernameCheck.length < 3 )  {
+    } else if (usernameCheck.length < 3 )  { // if the username input is less than 3 characters
         document.getElementById("usernameRequirementLength").textContent =  "Username must be at least 3 characters";
         usernameInput.style.borderColor = "red";
-    } else {
+
+    } else { // if the username input is valid, check if it is original
         usernameValid = await isUsernameOriginal(usernameCheck);
+        // if userame already exists
         if (usernameValid === false) {
             document.getElementById("usernameRequirement").textContent = "Username already exists";
             usernameInput.style.borderColor = "red";
             return;
         }
+        // if there is an error 
         if (usernameValid === null) {
             document.getElementById("usernameRequirement").textContent = "Unable to validate username, please try again.";
             usernameInput.style.borderColor = "red";
             return;
+        // username is orignal and valid
         } else {
-            document.getElementById("usernameRequirement").textContent = "";
+            document.getElementById("usernameRequirement").textContent = "Username is available";
             usernameValid = true;
             usernameValidity = true;
             usernameInput.style.borderColor = "#e3d8ca";
@@ -63,11 +67,11 @@ async function checkValidity(event) {
     }
 
     // check password validity
-    if (!passwordCheck) {
+    if (!passwordCheck) { // if the password input is empty
         document.getElementById("passwordRequirement").textContent =  "Please enter a password";
         passwordInput.style.borderColor = "red";
 
-    } else if (passwordCheck.length < 8 ) {
+    } else if (passwordCheck.length < 8 ) { // if the password input is less than 8 characters
         document.getElementById("passwordRequirementLength").textContent =  "Password must be at least 8 characters";
         passwordInput.style.borderColor = "red";
 
@@ -77,7 +81,7 @@ async function checkValidity(event) {
     }
 
     // check password comfirmation validity
-    if (passwordComfirmationCheck !== passwordCheck) {
+    if (passwordComfirmationCheck !== passwordCheck) { // if the password comfirmation input does not match the password input
         document.getElementById("passwordRequirementCheck").textContent =  "Passwords do not match";
         passwordComfirmationInput.style.borderColor = "red";
 
@@ -87,7 +91,7 @@ async function checkValidity(event) {
     }
 
     // check year validity
-    if (yearCheck === "") {
+    if (yearCheck === "") { // if the year input is empty
         document.getElementById("yearRequirement").textContent =  "Please select a year level";
         yearInput.style.borderColor = "red";
 
@@ -96,7 +100,7 @@ async function checkValidity(event) {
         yearInput.style.borderColor = "#e3d8ca";
     }
 
-    // if all inputs are valid 
+    // if any inputs are invalid ..
     if (!usernameValidity ||
         !passwordValidity ||
         !passwordComfirmationValidity ||
@@ -107,6 +111,7 @@ async function checkValidity(event) {
         return;
     }
 
+    // if all inputs are valid, clear the requirement messages and submit the form
     document.getElementById("usernameRequirement").textContent = "";
     document.getElementById("passwordRequirement").textContent = "";
     document.getElementById("passwordRequirementLength").textContent = "";
@@ -116,32 +121,43 @@ async function checkValidity(event) {
     form.submit();
 }
 
+// to check if the username is orginal / not already existing. (async is used so that an await can be used)
 async function isUsernameOriginal(username) {
     try {
-        const response = await fetch(`check_username.php?username=${encodeURIComponent(username)}`);
-        const text = await response.text();
+        // wait for the response from the check_username.php file.  encode the username to make it safe for use in a URL
+        let response = await fetch(`check_username.php?username=${encodeURIComponent(username)}`);
+        
+        // wait for the response to be converted into text
+        let text = await response.text();
 
+        // if any inputs are invalid
         if (!response.ok) {
-            console.error('Username validation request failed', response.status, text);
             return null;
         }
 
-        let data;
+        let data; // establish data as a variable
+
+        // tries to turn the data into readable text 
         try {
-            data = JSON.parse(text);
-        } catch (parseError) {
-            console.error('Username validation response invalid JSON', parseError, text);
+            data = JSON.parse(text); // make data readable in js 
+        } catch (parseError) { 
+            console.error('Username validation response invalid JSON', parseError, text); // if an error occurs show this on the console
             return null;
         }
 
-        if (!data || typeof data.usernameTaken !== 'boolean') {
-            console.error('Username validation response invalid', data);
-            return null;
+        // does the data exist? is it a boolean? if no then:
+        if (!data || typeof data.usernameTaken !== 'boolean') { 
+            console.error('Username validation response invalid', data); // show this on the console
+            return null; 
         }
 
-        return data.usernameTaken !== true;
+        // the data is valid, username is available
+        return data.usernameTaken !== true; 
+
+
     } catch (error) {
-        console.error('Username validation request error', error);
+        console.error('Username validation request error', error); // if error occurs when php is contacting the database(no json received) show this on the console 
+
         return null;
     }
 }
